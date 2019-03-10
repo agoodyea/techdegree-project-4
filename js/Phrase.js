@@ -4,10 +4,27 @@
 
 class Phrase {
     constructor(phrase) {
-        this.prase = phrase.toLowerCase();
+        this.phrase = phrase.toLowerCase();
     }
 
     addPhraseToDisplay() {
+        let chars = this.phrase.split('');
+        const phraseDiv = document.getElementById('phrase');
+
+        chars.forEach(char => {
+            if(char != ' ') {
+                let li = document.createElement('li');
+                li.setAttribute('class', `hide letter ${char}`);
+                li.textContent = char;
+                phraseDiv.appendChild(li);
+            }else {
+                let li = document.createElement('li');
+                li.setAttribute('class', `space`);
+                li.textContent = char;
+                phraseDiv.appendChild(li);
+            }
+        })
+        
 
     }
 
