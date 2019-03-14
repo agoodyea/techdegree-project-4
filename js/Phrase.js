@@ -43,10 +43,11 @@ class Phrase {
     */
     showMatchedLetter(letter) {
         const phraseLis = document.getElementById('phrase').children[0].children;
-        phraseLis.forEach(li => {
-            if(li.className.includes(letter)) {
-                li.className = 'show';
+
+        for(let i = 0; i < phraseLis.length; i++) {
+            if(phraseLis[i].textContent.includes(letter)) {
+                phraseLis[i].className = 'show';
             }
-        })
+        }
     }
 }

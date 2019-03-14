@@ -6,11 +6,23 @@
 // const phrase = game.getRandomPhrase();
 // phrase.addPhraseToDisplay();
 
-// document.getElementById('btn__reset').addEventListener('click', function() {
-//    const game = new Game();
-//    game.startGame();
-//    console.log(`Active Phrase - phrase: ${game.activePhrase.phrase}`);
-// })
+document.getElementById('btn__reset').addEventListener('click', function() {
+    // if(game) {
+    //     game = null;
+    // }
+   const game = new Game();
+   game.startGame();
 
-const game = new Game();
-game.startGame();
+    document.getElementById('qwerty').addEventListener('click', function(e){
+        game.handleInteraction(e);
+    });
+})
+
+// const game = new Game();
+// game.startGame();
+
+
+
+// TO DO LIST
+// - look if I can replace for loops with forEach() using .childNodes
+// - create inner function for pushing/creating phrases.

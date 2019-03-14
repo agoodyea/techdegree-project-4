@@ -27,20 +27,80 @@
         return this.phrases[randIndex];
      }
 
-     handleInteraction() {
+     handleInteraction(e) {
+         if(e.target.className === 'key') {
+            let letter = e.target.textContent.toLowerCase();
 
+            if(this.activePhrase.checkLetter(letter)) {
+                this.activePhrase.showMatchedLetter(letter);
+                e.target.disable = true;
+                e.target.className = 'chosen'
+            }else {
+                e.target.disable = true;
+                e.target.className = 'wrong';
+                this.removeLife();
+            }
+
+            if(this.checkForWin()) {
+                this.gameOver(true)
+            }
+         }
      }
 
+    /**
+    * Increases the value of the missed property
+    * Removes a life from the scoreboard
+    * Checks if player has remaining lives and ends game if player is out
+    */
      removeLife() {
+        const heartLis = document.getElementsByClassName('tries');
+        heartLis[this.missed].firstElementChild.setAttribute('src', 'images/lostHeart.png');
+        this.missed += 1;
 
+        if (this.missed === 5) {
+            this.gameOver(false);
+        }
      }
 
+     /**
+    * Checks for winning move
+    * @return {boolean} True if game has been won, false if game wasn't
+    won
+    */
      checkForWin() {
+        const phraseLis = document.getElementById('phrase').children[0].children;
+        let isWinner = true;
+        for(let i = 0; i < phraseLis.length; i++) {
+            if(phraseLis[i].className === 'show' || phraseLis[i].className === 'space') {
+                continue;
+            }else {
+                isWinner = false;
+                break;
+            }
+        }
+        return isWinner;
+     }  
 
-     }
+    /**
+    * Displays game over message
+    * @param {boolean} gameWon - Whether or not the user won the game
+    */
+     gameOver(gameWon) {
+        const overLay = document.getElementById('overlay');
+        overLay.style.display = '';
 
-     gameOver() {
-         
+        if(gameWon) {
+            overLay.className = 'win';
+            overLay.children[1].textContent = 'Nice, you win!'
+        }else {
+            overLay.className = 'lose';
+            overLay.children[1].textContent = 'Better luck next time'
+        }
+
+        const phraseUl = document.getElementById('phrase').firstElementChild;
+        for(let i = 0; i < phraseUl.children.length; i++) {
+            phraseUl.removeChild(phraseUl.children[i]);
+        }
      }
 
     /**
@@ -48,11 +108,24 @@
     * @return {array} An array of phrases that could be used in the game
     */
      createPhrases() {
-         const phrases = [];
-         for(let i = 1; i <= 5; i++) {
-             const phrase = new Phrase(`The Phrase Brah!${i}`);
-             phrases.push(phrase);
-         }
-         return phrases;
+        const phrasePool = []
+        const phrase1 = new Phrase('Winter is coming i think');
+        phrasePool.push(phrase1);
+        const phrase2 = new Phrase('I feel like chicken tonight');
+        phrasePool.push(phrase2);
+        const phrase3 = new Phrase('Hey those are my nuts');
+        phrasePool.push(phrase3);
+        const phrase4 = new Phrase('we might possible need a bigger boat maybe');
+        phrasePool.push(phrase4);
+        const phrase5 = new Phrase('luke i might be your father but im not sure');
+        phrasePool.push(phrase5);
+
+         return phrasePool;
      }
  }
+
+        'Winter is coming i think',
+        'I feel like chicken tonight',
+        'Hey those are my nuts',
+        'we might possible need a bigger boat maybe',
+        'luke i might be your father but im not sure'
