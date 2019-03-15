@@ -98,8 +98,8 @@
         }
 
         const phraseUl = document.getElementById('phrase').firstElementChild;
-        for(let i = 0; i < phraseUl.children.length; i++) {
-            phraseUl.removeChild(phraseUl.children[i]);
+        while(phraseUl.firstElementChild) {
+            phraseUl.removeChild(phraseUl.firstElementChild);
         }
      }
 
@@ -123,9 +123,3 @@
          return phrasePool;
      }
  }
-
-        'Winter is coming i think',
-        'I feel like chicken tonight',
-        'Hey those are my nuts',
-        'we might possible need a bigger boat maybe',
-        'luke i might be your father but im not sure'
